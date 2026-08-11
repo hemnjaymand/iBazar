@@ -25,9 +25,7 @@ export async function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white shadow-sm">
-      {/* =========================================================
-          TOP HEADER
-      ========================================================= */}
+      {/* ==================== TOP HEADER ==================== */}
       <div className="mx-auto max-w-[1920px] px-4 lg:px-6">
         <div className="flex h-16 items-center justify-between gap-4 md:h-[72px] md:gap-8">
           {/* Logo + Desktop Search */}
@@ -52,7 +50,7 @@ export async function Header() {
             </div>
           </div>
 
-          {/* Actions */}
+          {/* Header Actions */}
           <div className="flex shrink-0 items-center gap-2 md:gap-3">
             {/* Notifications */}
             <button
@@ -68,34 +66,16 @@ export async function Header() {
                 focus:outline-none
                 focus-visible:ring-2
                 focus-visible:ring-[var(--color-primary)]
+                focus-visible:ring-offset-2
                 md:flex
               "
             >
               <Bell className="h-5 w-5" />
             </button>
 
-            {/* Admin */}
-            <Link
-              href="/admin/login"
-              className="
-                hidden h-10 items-center
-                justify-center
-                rounded-lg
-                px-3
-                text-xs font-semibold
-                text-gray-600
-                transition-colors
-                hover:bg-gray-50
-                hover:text-gray-900
-                md:flex
-              "
-            >
-              admin
-            </Link>
-
-            {/* Authentication */}
+            {/* User Authentication */}
             {user ? (
-              <UserMenu name={user.name} image={user.image} />
+              <UserMenu name={user.name} image={user.image} role={user.role} />
             ) : (
               <Link
                 href="/login"
@@ -130,17 +110,13 @@ export async function Header() {
           </div>
         </div>
 
-        {/* =========================================================
-            MOBILE SEARCH
-        ========================================================= */}
+        {/* Mobile Search */}
         <div className="pb-3 sm:hidden">
           <SearchBar />
         </div>
       </div>
 
-      {/* =========================================================
-          DESKTOP NAVIGATION
-      ========================================================= */}
+      {/* ==================== DESKTOP NAVIGATION ==================== */}
       <div className="hidden border-t border-gray-100 lg:block">
         <div className="mx-auto max-w-[1920px] px-6">
           <div className="flex h-10 items-center justify-between text-xs xl:text-sm">
@@ -183,9 +159,7 @@ export async function Header() {
         </div>
       </div>
 
-      {/* =========================================================
-          MOBILE NAVIGATION
-      ========================================================= */}
+      {/* ==================== MOBILE NAVIGATION ==================== */}
       <MobileNav categories={categories} />
     </header>
   );
