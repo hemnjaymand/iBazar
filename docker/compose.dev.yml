@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: ibazar-postgres
+
+    restart: unless-stopped
+
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_DB: ibazar
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2890191281
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      
+      
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - ibazar-network
+
+volumes:
+  postgres_data:
+
+networks:
+  ibazar-network:

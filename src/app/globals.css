@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/**
+ * پالت بهینه‌شده برای حداکثر خوانایی و کنتراست (تأییدشده بر اساس استاندارد WCAG)
+ * حفظ هویت بصری دیجی‌کالا (قرمز/آبی/کارت‌های سفید) با رنگ‌های شفاف‌تر و خواناتر
+ */
+@theme {
+  --color-background: #F8F9FA;
+  --color-foreground: #0F172A;
+
+  --color-card: #FFFFFF;
+  --color-card-foreground: #0F172A;
+
+  /* رنگ اصلی: قرمز پرانرژی با کنتراست بالا برای متن سفید دکمه‌ها */
+  --color-primary: #D8223B;
+  --color-primary-foreground: #FFFFFF;
+
+  /* آبی: برای لینک‌ها، آیکون‌ها و جزییات فنی با خوانایی بالا */
+  --color-info: #1D4ED8;
+  --color-info-foreground: #FFFFFF;
+
+  /* رنگ تاکید/هشدار */
+  --color-accent: #D97706;
+  --color-accent-foreground: #FFFFFF;
+
+  /* متون خاکستری و کم‌رنگ (کپشن‌ها، توضیحات محصول، تاریخ‌ها) */
+  --color-muted: #F1F5F9;
+  --color-muted-foreground: #475467;
+
+  /* رنگ خطا و حذف */
+  --color-destructive: #DC2626;
+  --color-destructive-foreground: #FFFFFF;
+
+  --color-border: #E2E8F0;
+  --color-ring: #D8223B;
+
+  --radius: 0.5rem;
+
+  --font-sans: "Vazirmatn", "IRANSans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+@layer base {
+  html {
+    direction: rtl;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+  /* قیمت/SKU/شماره سفارش — فونت مونو و اعدادی کاملاً خوانا */
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+}

@@ -1,0 +1,33 @@
+
+// export type SiteSettings = {
+//   clinicName: string;
+//   address: string;
+//   phone: string;
+//   instagram: string;
+//   email: string;
+//   workingHours: string;
+//   aboutText: string;
+//   heroImageUrl: string;
+//   bannerImages: string[];
+//   licenseText: string;
+//   usefulLinks: UsefulLink[];
+//   features: Feature[];
+//   serviceDetail: ServiceDetail | null;
+//   serviceTags: ServiceTag[];
+//   recentShowcaseCases: ShowcaseCase[];
+//   pageBanners: PageBanners;
+//   latestArticles: { title: string; href: string }[];
+//   latitude: string;
+//   longitude: string;
+//   mapZoom: number;
+//   consultationTitle: string;
+//   consultationSubtitle: string;
+//   consultationButtonText: string;
+//   consultationBackgroundImage: string;
+//   brands: Brand[];
+//   videoTestimonials: VideoTestimonial[];
+//   featuresBackgroundImage: string;
+//   videoTestimonialsBackgroundImage: string;
+//   recentPatientsBackgroundImage: string;
+//   brandsBackgroundImage: string;
+// };

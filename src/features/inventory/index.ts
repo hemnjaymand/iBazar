@@ -1,0 +1,1 @@
+export { decreaseStockForSaleService } from "./services/decrease-stock-for-sale.service";

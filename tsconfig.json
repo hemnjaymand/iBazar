@@ -1,3 +1,40 @@
+// {
+//   "compilerOptions": {
+//     "target": "ES2017",
+//     "lib": ["dom", "dom.iterable", "esnext"],
+//     "allowJs": true,
+//     "skipLibCheck": true,
+//     "strict": true,
+//     "noEmit": true,
+//     "esModuleInterop": true,
+//     "module": "esnext",
+//     "moduleResolution": "bundler",
+//     "resolveJsonModule": true,
+//     "isolatedModules": true,
+//     "jsx": "react-jsx",
+//     "incremental": true,
+//     "plugins": [
+//       {
+//         "baseUrl": ".",
+//         "name": "next"
+//       }
+//     ],
+//     "paths": {
+//       "@/*": ["./src/*", "./lib/*"]
+//       // "@prisma/client": ["./src/generated/prisma/index"],
+//       // "@prisma/client/*": ["./prisma/*"]
+//     }
+//   },
+//   "include": [
+//     "next-env.d.ts",
+//     "**/*.ts",
+//     "**/*.tsx",
+//     ".next/types/**/*.ts",
+//     ".next/dev/types/**/*.ts",
+//     "**/*.mts"
+//   ],
+//   "exclude": ["node_modules"]
+// }
 {
   "compilerOptions": {
     "target": "ES2017",
@@ -13,22 +50,14 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [{ "name": "next" }],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"],
+      "@prisma/client": ["./src/generated/prisma/client"],
+      // "@prisma-generated/*": ["./prisma/generated/*"]
+
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts"],
   "exclude": ["node_modules"]
-}
+} 

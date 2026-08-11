@@ -1,0 +1,174 @@
+﻿import type { Metadata } from "next";
+import { Suspense } from "react";
+import Link from "next/link";
+import { unstable_cache } from "next/cache";
+import { Header } from "@/app/_components/header";
+import { HeroCarousel } from "@/features/content/components/hero-carousel";
+import { bannerRepository } from "@/features/content/repositories/banner.repository";
+import { searchProductsService } from "@/features/catalog/services/search-products.service";
+import { toBannerDTO } from "@/features/content/mappers/banner.mapper";
+import { ProductGrid } from "@/features/shopping/components/product-grid";
+import { CategoryShowcase } from "@/features/catalog/components/category-showcase";
+import { getLatestProductsService } from "@/features/catalog/services/get-latest-products.service";
+import { HeroSlider } from "./_components/Slider/hero-slider";
+
+// ============================================
+// ۱. کش کردن داده‌ها برای کاهش درخواست‌های تکراری
+// ============================================
+
+const getCachedBanners = unstable_cache(
+  async () => {
+    const banners =
+      await bannerRepository.findActiveByPlacement("HOMEPAGE_HERO");
+    return banners.map(toBannerDTO);
+  },
+  ["home-banners"],
+  { revalidate: 3600 }, // کش به مدت ۱ ساعت
+);
+
+const getCachedProducts = unstable_cache(
+  async () => {
+    return searchProductsService({ page: 1, limit: 12 });
+  },
+  ["home-products"],
+  { revalidate: 3600 },
+);
+
+const getCachedCategories = unstable_cache(
+  async () => {
+    // فرض: سرویسی برای دریافت دسته‌بندی‌های ویژه وجود دارد
+    return getLatestProductsService(6); // یا هر سرویس دیگری
+  },
+  ["home-categories"],
+  { revalidate: 3600 },
+);
+
+// ============================================
+// ۲. متادیتا (SEO)
+// ============================================
+
+export const metadata: Metadata = {
+  title: "فروشگاه اینترنتی | خرید آنلاین با بهترین قیمت",
+  description:
+    "خرید آنلاین از بهترین برندهای روز ایران و جهان با ضمانت اصالت کالا و بهترین قیمت. ارسال سریع و پرداخت امن.",
+  keywords: [
+    "فروشگاه اینترنتی",
+    "خرید آنلاین",
+    "محصولات دیجیتال",
+    "قیمت مناسب",
+  ],
+  openGraph: {
+    title: "فروشگاه اینترنتی | خرید آنلاین",
+    description: "بهترین برندها با قیمت‌های استثنایی",
+    url: "https://yourstore.com",
+    siteName: "فروشگاه اینترنتی",
+    images: [
+      {
+        url: "https://yourstore.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "فروشگاه اینترنتی",
+      },
+    ],
+    locale: "fa_IR",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+// ============================================
+// ۳. کامپوننت اصلی صفحه (Server Component)
+// ============================================
+
+export default async function HomePage() {
+  // دریافت تمام داده‌ها به‌صورت موازی با کش
+  const [bannerDTOs, products, latestProducts] = await Promise.all([
+    getCachedBanners(),
+    getCachedProducts(),
+    getCachedCategories(),
+  ]);
+
+  return (
+    <div className="min-h-screen bg-[var(--color-background)]">
+       <section className="pt-4">
+          <Suspense fallback={<div className="h-[300px] bg-muted animate-pulse rounded-xl" />}>
+            <HeroSlider />
+          </Suspense>
+        </section>
+      <Header />
+
+      <main className="mx-auto max-w-7xl px-4">
+        {/* ================== اسلایدر اصلی ================== */}
+        <section className="pt-4">
+          <Suspense
+            fallback={
+              <div className="h-[300px] bg-muted animate-pulse rounded-xl" />
+            }
+          >
+            <HeroCarousel banners={bannerDTOs} />
+          </Suspense>
+        </section>
+
+        {/* ================== دسته‌بندی‌های ویژه ================== */}
+        <section className="py-8">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-xl font-bold">دسته‌بندی‌های پرفروش</h2>
+            <Link
+              href="/categories"
+              className="text-sm text-primary hover:underline"
+            >
+              مشاهده همه
+            </Link>
+          </div>
+          <CategoryShowcase categories={latestProducts} />
+        </section>
+
+        {/* ================== محصولات ویژه ================== */}
+        <section className="py-8">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-xl font-bold">محصولات ویژه</h2>
+            <Link
+              href="/products"
+              className="text-sm text-primary hover:underline"
+            >
+              مشاهده همه
+            </Link>
+          </div>
+          <ProductGrid products={products} />
+        </section>
+
+        {/* ================== بنر تبلیغاتی پایین ================== */}
+        <section className="py-8">
+          <div className="relative rounded-xl overflow-hidden bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 text-white">
+            <div className="max-w-lg">
+              <h3 className="text-2xl font-bold mb-2">تخفیف ویژه تابستان</h3>
+              <p className="text-sm opacity-90 mb-4">
+                با کد{" "}
+                <span className="font-mono bg-white/20 px-2 py-1 rounded-md">
+                  SUMMER1404
+                </span>{" "}
+                تا ۲۰٪ تخفیف بگیرید.
+              </p>
+              <Link
+                href="/products"
+                className="inline-block bg-white text-gray-900 px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-100 transition"
+              >
+                خرید کنید
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
