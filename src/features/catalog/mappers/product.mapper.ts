@@ -6,14 +6,14 @@ import type {
   ProductListItemDTO,
   ProductDefaultVariantDTO,
 } from "../types/product.dto";
+import { VariantResponseDTO } from "../types";
 import {
   Attribute,
   AttributeValue,
+  Product,
   Variant,
   VariantAttributeValue,
 } from "@prisma/client";
-import { Product } from "../../../../prisma/generated/client";
-import { VariantResponseDTO } from "../types";
 
 export type VariantWithAttributes = Variant & {
   attributeValues: (VariantAttributeValue & {
