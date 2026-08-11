@@ -1,10 +1,11 @@
+import { Prisma } from "@prisma/client/client";
 import { prisma } from "../../../../lib/prisma";
 import {
   toProductListItemDTO,
   VariantWithAttributes,
 } from "../mappers/product.mapper";
 import type { ProductListItemDTO } from "../types/product.dto";
-import type { Prisma } from "@prisma/client";
+
 
 interface SearchProductsOptions {
   page?: number;

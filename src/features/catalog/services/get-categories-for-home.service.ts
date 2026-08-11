@@ -1,4 +1,4 @@
-import type { Category } from "@prisma/client";
+import type { Category } from "@prisma/client/client";;
 import { prisma } from "../../../../lib/prisma";
 
 export async function getCategoriesForHomeService(

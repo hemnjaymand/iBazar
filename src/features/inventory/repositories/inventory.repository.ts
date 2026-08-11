@@ -1,6 +1,6 @@
 // features/inventory/repositories/inventory.repository.ts
 import { prisma } from "../../../../lib/prisma";
-import type { StockMovementType } from "@prisma/client";
+import type { StockMovementType } from "@prisma/client/client";
 
 export const inventoryRepository = {
   findAllWithStock() {

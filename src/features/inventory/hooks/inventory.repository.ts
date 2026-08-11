@@ -1,4 +1,4 @@
-import { StockMovementType } from "@prisma/client";
+import { StockMovementType } from "@prisma/client/client";
 import { prisma } from "../../../../lib/prisma";
 
 export const inventoryRepository = {

@@ -1,5 +1,5 @@
 // features/inventory/lib/inventory.mapper.ts
-import type { StockMovement, Variant, Product } from "@prisma/client";
+import type { StockMovement, Variant, Product } from "@prisma/client/client";
 import type { StockMovementDTO, InventoryRowDTO } from "../types/stock-movement.dto";
 
 export function toStockMovementDTO(m: StockMovement): StockMovementDTO {

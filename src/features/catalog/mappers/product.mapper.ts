@@ -13,7 +13,7 @@ import {
   Product,
   Variant,
   VariantAttributeValue,
-} from "@prisma/client";
+} from "@prisma/client/client";
   
 export type VariantWithAttributes = Variant & {
   attributeValues: (VariantAttributeValue & {
