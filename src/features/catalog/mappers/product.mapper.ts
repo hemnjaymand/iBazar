@@ -1,16 +1,19 @@
+import type { AdminProductListItem } from "../services/list-products-for-admin.service";
+import type { ProductTableRow } from "../types/product-table-row.dto";
 
 import type {
   ProductDetailDTO,
   ProductListItemDTO,
   ProductDefaultVariantDTO,
 } from "../types/product.dto";
-
-import type { VariantResponseDTO } from "../types/variant.dto";
-import type { ProductTableRow } from "../types/product-table-row.dto";
-
-import type { AdminProductListItem } from "../services/list-products-for-admin.service";
-import { Attribute, AttributeValue, Variant, VariantAttributeValue } from "@prisma/client";
+import {
+  Attribute,
+  AttributeValue,
+  Variant,
+  VariantAttributeValue,
+} from "@prisma/client";
 import { Product } from "../../../../prisma/generated/client";
+import { VariantResponseDTO } from "../types";
 
 export type VariantWithAttributes = Variant & {
   attributeValues: (VariantAttributeValue & {
