@@ -14,7 +14,7 @@ import {
   Variant,
   VariantAttributeValue,
 } from "@prisma/client";
- 
+  
 export type VariantWithAttributes = Variant & {
   attributeValues: (VariantAttributeValue & {
     attributeValue: AttributeValue & {

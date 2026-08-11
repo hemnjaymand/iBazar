@@ -105,7 +105,7 @@ CREATE TABLE "products" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
-);
+); 
 
 -- CreateTable
 CREATE TABLE "variants" (

@@ -139,7 +139,7 @@ model Product {
   wishlistItems WishlistItem[]
 
   @@map("products")
-}
+} 
 
 model Variant {
   id                String                  @id @default(cuid())

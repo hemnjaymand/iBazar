@@ -28,7 +28,7 @@
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
-  },
+  }, 
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@better-auth/prisma-adapter": "^1.6.25",
