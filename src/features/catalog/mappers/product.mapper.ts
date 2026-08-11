@@ -1,10 +1,3 @@
-import type {
-  Product,
-  Variant,
-  VariantAttributeValue,
-  AttributeValue,
-  Attribute,
-} from "@prisma/client";
 
 import type {
   ProductDetailDTO,
@@ -16,6 +9,8 @@ import type { VariantResponseDTO } from "../types/variant.dto";
 import type { ProductTableRow } from "../types/product-table-row.dto";
 
 import type { AdminProductListItem } from "../services/list-products-for-admin.service";
+import { Attribute, AttributeValue, Variant, VariantAttributeValue } from "@prisma/client";
+import { Product } from "../../../../prisma/generated/client";
 
 export type VariantWithAttributes = Variant & {
   attributeValues: (VariantAttributeValue & {
