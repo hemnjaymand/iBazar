@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getCategoryUrl } from "@/shared/utils/category-url";
-import { Category } from "@prisma/client";
+import { Category } from "@prisma/client/client";
 
 type CategoryWithOptionalImage = Category & {
   imageUrl?: string | null;
