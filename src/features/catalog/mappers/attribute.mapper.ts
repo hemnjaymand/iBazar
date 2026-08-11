@@ -1,4 +1,4 @@
-import type { Attribute } from "@prisma/client";
+import { Attribute } from "@prisma/client/client";
 
 export function toAttributeDTO(attribute: Attribute) {
   return {
