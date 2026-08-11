@@ -1,7 +1,7 @@
 // features/system/repositories/notification.repository.ts
 import { prisma } from "../../../../lib/prisma";
 
-import type { NotificationType } from "@prisma/client";
+import { NotificationType } from "../../../../prisma/generated/enums";
 
 export const notificationRepository = {
   findByUser(userId: string) {
