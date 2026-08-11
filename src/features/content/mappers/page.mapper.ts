@@ -1,5 +1,5 @@
 ﻿
-import { Page } from "@prisma/client";
+import { Page } from "@prisma/client/client";
 import type { PageDTO } from "../types/page.dto";
 
 export function toPageDTO(page: Page): PageDTO {

@@ -1,4 +1,4 @@
-import type { Tag } from "@prisma/client";
+import { Tag } from "@prisma/client/client";
 import type { TagDTO } from "../types/tag.dto";
 
 export function toTagDTO(t: Tag): TagDTO {

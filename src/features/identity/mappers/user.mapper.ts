@@ -1,5 +1,5 @@
 ﻿
-import { User } from "@prisma/client";
+import { User } from "@prisma/client/client";
 import { UserResponseDTO } from "../types";
 
 export function toUserResponseDTO(user: User): UserResponseDTO {

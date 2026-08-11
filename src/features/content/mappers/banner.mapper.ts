@@ -1,5 +1,5 @@
 ﻿// features/content/mappers/banner.mapper.ts — نسخه‌ی تکمیل‌شده
-import type { Banner } from "@prisma/client";
+import { Banner } from "@prisma/client/client";
 import type { BannerDTO } from "../types/banner.dto";
 
 export function toBannerDTO(b: Banner): BannerDTO {

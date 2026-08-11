@@ -1,5 +1,5 @@
 // features/catalog/mappers/category.mapper.ts
-import type { Category } from "@prisma/client";
+import { Category } from "@prisma/client/client";
 import type { CategoryResponseDTO } from "../types/category.dto";
 
 export function toCategoryResponseDTO(c: Category): CategoryResponseDTO {

@@ -1,5 +1,5 @@
 // features/identity/lib/user.mapper.ts
-import type { User } from "@prisma/client";
+import { User } from "@prisma/client/client";
 import type { UserResponseDTO } from "../types/user-response.dto";
 
 export function toUserResponseDTO(user: User): UserResponseDTO {

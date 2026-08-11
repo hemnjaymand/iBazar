@@ -1,5 +1,5 @@
 
-import { User } from "@prisma/client";
+import { User } from "@prisma/client/client";
 import { UserAdminRowDTO } from "../types/user-admin-row.dto";
 
 export function toUserAdminRowDTO(u: User): UserAdminRowDTO {

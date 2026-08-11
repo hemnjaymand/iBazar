@@ -1,4 +1,4 @@
-﻿import type { Coupon } from "@prisma/client";
+﻿import { Coupon } from "@prisma/client/client";
 import { CouponDTO } from "../types";
 
 export function toCouponDTO(c: Coupon): CouponDTO {

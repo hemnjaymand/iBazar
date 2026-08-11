@@ -1,4 +1,4 @@
-﻿import type { ProductImage } from "@prisma/client";
+﻿import { ProductImage } from "@prisma/client/client";
 import type { ProductImageDTO } from "../types/product-image.dto";
 
 export function toProductImageDTO(image: ProductImage): ProductImageDTO {

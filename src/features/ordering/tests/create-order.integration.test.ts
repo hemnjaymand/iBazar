@@ -2,9 +2,9 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { validateCouponService } from "@/features/discount/service/validate-coupon.service";
 import { BusinessError } from "@/server/errors/business-error";
 import { ErrorCodes } from "@/server/errors/error-codes";
-import type { Coupon } from "@prisma/client";
 import type { Decimal } from "@prisma/client/runtime/client";
 import { couponRepository } from "../repositories";
+import { Coupon } from "@prisma/client/client";
 
 // ----- شبیه‌ساز Decimal -----
 function mockDecimal(value: number): Pick<Decimal, "toNumber" | "toString"> {

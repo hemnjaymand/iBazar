@@ -1,4 +1,4 @@
-import type { Variant } from "@prisma/client";
+import { Variant } from "@prisma/client/client";
 
 export function toVariantDTO(variant: Variant) {
   return {

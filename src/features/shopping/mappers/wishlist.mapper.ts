@@ -1,4 +1,4 @@
-import type { WishlistItem, Product, Variant } from "@prisma/client";
+import type { WishlistItem, Product, Variant } from "@prisma/client/client";;
 import type { WishlistItemDTO } from "../types/wishlist.dto";
 
 type WishlistItemWithRelations = WishlistItem & { product: Product & { variants: Variant[] } };

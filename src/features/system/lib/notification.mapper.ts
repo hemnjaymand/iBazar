@@ -1,4 +1,4 @@
-import type { Notification } from "@prisma/client";
+import type { Notification } from "@prisma/client/client";
 import type { NotificationDTO } from "../types/notification.dto";
 
 export function toNotificationDTO(n: Notification): NotificationDTO {

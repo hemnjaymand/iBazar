@@ -1,6 +1,6 @@
 // features/content/repositories/banner.repository.ts
+import { BannerPlacement } from "@prisma/client/enums";
 import { prisma } from "../../../../lib/prisma";
-import type { BannerPlacement } from "@prisma/client";
 
 export const bannerRepository = {
   findActiveByPlacement(placement: BannerPlacement) {

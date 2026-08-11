@@ -1,4 +1,4 @@
-import type { Banner } from "@prisma/client";
+import { Banner } from "@prisma/client/client";
 import { BannerDTO } from "../types";
 
 export function toBannerDTO(banner: Banner): BannerDTO {

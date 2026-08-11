@@ -1,5 +1,5 @@
 ﻿
-import type { Page } from "@prisma/client";
+import { Page } from "@prisma/client/client";
 import { prisma } from "../../../../lib/prisma";
 
 export const pageRepository = {

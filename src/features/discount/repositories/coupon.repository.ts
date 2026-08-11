@@ -1,5 +1,5 @@
-﻿import { prisma } from "../../../../lib/prisma";
-import type { Coupon } from "@prisma/client";
+﻿import { Coupon } from "@prisma/client/client";
+import { prisma } from "../../../../lib/prisma";
 
 export const couponRepository = {
   findByCode(code: string): Promise<Coupon | null> {

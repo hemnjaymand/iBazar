@@ -3,8 +3,8 @@ import { validateCouponService } from "./validate-coupon.service";
 import { couponRepository } from "../repositories/coupon.repository";
 import { BusinessError } from "@/server/errors/business-error";
 import { ErrorCodes } from "@/server/errors/error-codes";
-import type { Coupon } from "@prisma/client";
 import type { Decimal } from "@prisma/client/runtime/client";
+import { Coupon } from "@prisma/client/client";
 
 vi.mock("../repositories/coupon.repository");
 

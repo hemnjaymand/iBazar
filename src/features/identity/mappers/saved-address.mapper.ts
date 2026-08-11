@@ -1,6 +1,6 @@
 
 
-import { SavedAddress } from "@prisma/client";
+import { SavedAddress } from "@prisma/client/client";
 import type { SavedAddressDTO } from "../types/saved-address.dto";
 
 export function toSavedAddressDTO(a: SavedAddress): SavedAddressDTO {

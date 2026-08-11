@@ -1,4 +1,4 @@
-import type { Cart, CartItem, Variant, Product, ProductImage } from "@prisma/client";
+import type { Cart, CartItem, Variant, Product, ProductImage } from "@prisma/client/client";;
 import type { CartDTO, CartItemDTO } from "../types/cart.dto";
 
 type CartItemWithRelations = CartItem & {

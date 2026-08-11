@@ -1,4 +1,4 @@
-import type { Order, OrderItem } from "@prisma/client";
+import { Order, OrderItem } from "@prisma/client/client";
 import type { OrderDTO, OrderItemDTO, OrderStatus } from "../types/order.dto";
 
 export function toOrderItemDTO(item: OrderItem): OrderItemDTO {
