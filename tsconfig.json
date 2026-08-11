@@ -53,8 +53,8 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@/*": ["./src/*"],
-      "@prisma/client": ["./src/generated/prisma/client"],
-      // "@prisma-generated/*": ["./prisma/generated/*"]
+     "@prisma/client": ["./prisma/generated"],
+      "@prisma/client/*": ["./prisma/generated/*"]
 
     }
   },

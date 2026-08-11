@@ -1,7 +1,8 @@
 // features/system/repositories/notification.repository.ts
+import { NotificationType } from "@prisma/client";
 import { prisma } from "../../../../lib/prisma";
 
-import type { NotificationType } from "@prisma/client";
+
 
 export const notificationRepository = {
   findByUser(userId: string) {
@@ -11,10 +12,18 @@ export const notificationRepository = {
       take: 20,
     });
   },
-  create(data: { userId: string; type: NotificationType; title: string; message: string }) {
+  create(data: {
+    userId: string;
+    type: NotificationType;
+    title: string;
+    message: string;
+  }) {
     return prisma.notification.create({ data });
   },
   markAsRead(id: string) {
-    return prisma.notification.update({ where: { id }, data: { isRead: true } });
+    return prisma.notification.update({
+      where: { id },
+      data: { isRead: true },
+    });
   },
 };
