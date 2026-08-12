@@ -14,7 +14,7 @@ export async function getLatestProductsService(limit: number = 6): Promise<Produ
       // isActive: true, // در صورت وجود این فیلد در اسکیما، اضافه کنید
     },
     include: {
-      variants: {
+      variants: { 
         where: { isDefault: true },
         take: 1,
       },

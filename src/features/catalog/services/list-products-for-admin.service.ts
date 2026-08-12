@@ -14,7 +14,7 @@ export interface AdminProductListItem extends ProductListItemDTO {
 type ProductWithCategory = Awaited<
   ReturnType<typeof productRepository.findAllForAdmin>
 >[number];
-
+ 
 
 export async function listProductsForAdminService(page = 1) {
   const take = PAGINATION_DEFAULTS.pageSize;

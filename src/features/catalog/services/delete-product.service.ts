@@ -17,3 +17,4 @@ export async function deleteProductService(id: string) {
   const updated = await productRepository.softDelete(id);
   return toProductDetailDTO(updated);
 }
+  

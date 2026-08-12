@@ -20,4 +20,4 @@ export async function createProductService(input: CreateProductInput) {
   });
 
   return toProductDetailDTO(product);
-}
+} 

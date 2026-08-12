@@ -13,4 +13,4 @@ export function toProductImageDTO(image: ProductImage): ProductImageDTO {
 
 export function toProductImageDTOList(images: ProductImage[]): ProductImageDTO[] {
   return images.map(toProductImageDTO);
-}
+} 

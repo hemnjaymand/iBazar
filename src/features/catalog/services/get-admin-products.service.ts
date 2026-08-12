@@ -12,3 +12,4 @@ export async function getAdminProductsService(): Promise<ProductListItemDTO[]> {
     categoryName: p.category?.name ?? "—",
   }));
 }
+ 

@@ -61,6 +61,7 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
         price: 0,
         compareAtPrice: undefined,
         stock: 0,
+        // shouldUnregister: true,
       },
     },
   });
@@ -80,9 +81,9 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
     }));
 
     setImages((prev) => [...prev, ...newImages]);
-    
+
     // پاک کردن مقدار اینپوت تا کاربر بتواند در صورت نیاز همان فایل را دوباره انتخاب کند
-    e.target.value = ""; 
+    e.target.value = "";
   }
 
   // ۲. مدیریت صحیح حذف تصویر و آزادسازی حافظه مرورگر
@@ -113,82 +114,48 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
 
     const productId = result.data.id;
 
-    // // آپلود تصاویرِ باقی‌مانده در State به سرور
-    // if (images.length > 0) {
-    //   try {
-    //     for (const image of images) {
-    //       if (!image.file) continue;
+    // آپلود تصاویرِ باقی‌مانده در State به سرور
+    if (images.length > 0) {
+      try {
+        for (const image of images) {
+          if (!image.file) continue;
 
-    //       const formData = new FormData();
-    //       formData.append("file", image.file);
+          const formData = new FormData();
+          formData.append("file", image.file);
 
-    //       const response = await fetch("/api/upload", {
-    //         method: "POST",
-    //         body: formData,
-    //       });
+          // ✨ خط اضافه شده: ارسال شناسه محصول به بک‌اند
+          formData.append("productId", productId);
 
-    //       if (!response.ok) {
-    //         throw new Error(`خطا در آپلود تصویر: ${image.altText}`);
-    //       }
+          const response = await fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          });
 
-    //       const uploadData = await response.json();
+          if (!response.ok) {
+            throw new Error(`خطا در آپلود تصویر: ${image.altText}`);
+          }
 
-    //       // اتصال تصویر آپلود شده به محصول در دیتابیس
-    //       await addProductImageAction({
-    //         productId,
-    //         url: uploadData.url, // لینک واقعی برگشتی از سرور
-    //         altText: image.altText,
-    //         sortOrder: 0,
-    //       });
-    //     }
-    //   } catch (error) {
-    //     setServerError((error as Error).message);
-    //     router.push(`/admin/products/${productId}/edit`);
-    //     return;
-    //   }
-    // }
-// آپلود تصاویرِ باقی‌مانده در State به سرور
-if (images.length > 0) {
-  try {
-    for (const image of images) {
-      if (!image.file) continue;
+          const uploadData = await response.json();
 
-      const formData = new FormData();
-      formData.append("file", image.file);
-      
-      // ✨ خط اضافه شده: ارسال شناسه محصول به بک‌اند
-      formData.append("productId", productId);
+          // اتصال تصویر آپلود شده به محصول در دیتابیس (Supabase)
+          await addProductImageAction({
+            productId,
+            url: uploadData.url,
+            altText: image.altText,
+            sortOrder: 0,
+          });
+        }
+      } catch (error) {
+        setServerError((error as Error).message);
 
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`خطا در آپلود تصویر: ${image.altText}`);
+        // اگر هنوز صفحه edit را نساخته‌اید، موقتاً کاربر را به لیست محصولات برگردانید
+        // router.push(`/admin/products/${productId}/edit`);
+        router.push("/admin/products");
+        return;
       }
-
-      const uploadData = await response.json();
-
-      // اتصال تصویر آپلود شده به محصول در دیتابیس (Supabase)
-      await addProductImageAction({
-        productId,
-        url: uploadData.url, 
-        altText: image.altText,
-        sortOrder: 0,
-      });
     }
-  } catch (error) {
-    setServerError((error as Error).message);
-    
-    // اگر هنوز صفحه edit را نساخته‌اید، موقتاً کاربر را به لیست محصولات برگردانید
-    // router.push(`/admin/products/${productId}/edit`);
-    router.push("/admin/products");
-    return;
-  }
-}
     // پاکسازی لینک‌های موقت پس از اتمام موفقیت‌آمیز
-    images.forEach(img => URL.revokeObjectURL(img.url));
+    images.forEach((img) => URL.revokeObjectURL(img.url));
 
     router.push("/admin/products");
     router.refresh();
@@ -302,7 +269,9 @@ if (images.length > 0) {
         </div>
 
         {/* ناحیه آپلود */}
-        <label className={`flex flex-col items-center justify-center border-2 border-dashed border-[var(--color-border)] hover:border-[var(--color-primary)] rounded-xl p-8 cursor-pointer transition group ${isSubmitting ? 'opacity-50 pointer-events-none' : 'bg-[var(--color-background)]/50 hover:bg-[var(--color-muted)]/40'}`}>
+        <label
+          className={`flex flex-col items-center justify-center border-2 border-dashed border-[var(--color-border)] hover:border-[var(--color-primary)] rounded-xl p-8 cursor-pointer transition group ${isSubmitting ? "opacity-50 pointer-events-none" : "bg-[var(--color-background)]/50 hover:bg-[var(--color-muted)]/40"}`}
+        >
           <div className="flex flex-col items-center justify-center text-center">
             <div className="w-12 h-12 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
               {isSubmitting ? (
@@ -411,7 +380,9 @@ if (images.length > 0) {
               id="defaultVariant.compareAtPrice"
               type="number"
               placeholder="500000"
-              {...register("defaultVariant.compareAtPrice")}
+              {...register("defaultVariant.compareAtPrice", {
+                setValueAs: (v) => (v === "" ? undefined : Number(v)),
+              })}
             />
           </div>
 

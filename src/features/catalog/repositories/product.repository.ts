@@ -1,18 +1,9 @@
+import "server-only";
 import { prisma } from "../../../../lib/prisma";
 import { Prisma } from "../../../../prisma/generated/client";
 import { ProductWithVariants } from "../mappers";
+import { variantInclude } from "../prisma/product.include";
 
-const variantInclude = {
-  attributeValues: {
-    include: {
-      attributeValue: {
-        include: {
-          attribute: true,
-        },
-      },
-    },
-  },
-} as const;
 
 export interface CreateProductWithVariantInput {
   name: string;
@@ -43,10 +34,23 @@ export const productRepository = {
         variants: {
           include: variantInclude,
         },
+
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+
+        brand: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
   },
-
   findBySlug(slug: string) {
     return prisma.product.findUnique({
       where: {
@@ -67,27 +71,27 @@ export const productRepository = {
     });
   },
   findManyByIds(ids: string[]) {
-  return prisma.product.findMany({
-    where: {
-      id: {
-        in: ids,
-      },
-    },
-
-    include: {
-      images: {
-        orderBy: {
-          sortOrder: "asc",
+    return prisma.product.findMany({
+      where: {
+        id: {
+          in: ids,
         },
-        take: 1,
       },
 
-      variants: {
-        include: variantInclude,
+      include: {
+        images: {
+          orderBy: {
+            sortOrder: "asc",
+          },
+          take: 1,
+        },
+
+        variants: {
+          include: variantInclude,
+        },
       },
-    },
-  });
-},
+    });
+  },
   findManyPublished(params: {
     skip: number;
     take: number;
@@ -145,6 +149,14 @@ export const productRepository = {
 
         category: {
           select: {
+            id: true,
+            name: true,
+          },
+        },
+
+        brand: {
+          select: {
+            id: true,
             name: true,
           },
         },
@@ -193,30 +205,44 @@ export const productRepository = {
       include: { variants: { include: variantInclude } },
     });
   },
-softDelete(id: string) {
-  return prisma.product.update({
-    where: {
-      id,
-    },
-
+  updateVariant(
+    id: string,
     data: {
-      isActive: false,
-      isPublished: false,
+      sku?: string;
+      price?: number;
+      compareAtPrice?: number | null;
+      stock?: number;
     },
+  ) {
+    return prisma.variant.update({
+      where: { id },
+      data,
+    });
+  },
+  softDelete(id: string) {
+    return prisma.product.update({
+      where: {
+        id,
+      },
+ 
+      data: {
+        isActive: false,
+        isPublished: false,
+      },
 
-    include: {
-      images: {
-        orderBy: {
-          sortOrder: "asc",
+      include: {
+        images: {
+          orderBy: {
+            sortOrder: "asc",
+          },
+        },
+
+        variants: {
+          include: variantInclude,
         },
       },
-
-      variants: {
-        include: variantInclude,
-      },
-    },
-  });
-},
+    });
+  },
 
   findSkuExists(sku: string) {
     return prisma.variant.findUnique({ where: { sku } });
@@ -237,29 +263,4 @@ softDelete(id: string) {
   },
 };
 
-//features/catalog/prisma/product.include.ts
-//راه حل ۲: انتقال variantInclude به یک فایل
-// مشترکاگر می‌خواهید Type دقیق داشته باشید، بهتر است یک فایل بسازید:مثلاً:داخل آن:بعد در Repository:به جای:بزنید:حالا این کار می‌کند:و در Mapper:
-
-// export const variantInclude = {
-//   attributeValues: {
-//     include: {
-//       attributeValue: {
-//         include: {
-//           attribute: true,
-//         },
-//       },
-//     },
-//   },
-// } as const;
-// const variantInclude = {...}
-// import { variantInclude } from "../prisma/product.include";
-// import { variantInclude } from "../prisma/product.include";
-// export type ProductWithVariants = Prisma.ProductGetPayload<{
-//   include:{
-//     images:true;
-//     variants:{
-//       include: typeof variantInclude;
-//     };
-//   }
-// }>
+//

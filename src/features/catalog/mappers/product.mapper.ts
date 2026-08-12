@@ -14,7 +14,7 @@ import {
   Variant,
   VariantAttributeValue,
 } from "@prisma/client/client";
-  
+
 export type VariantWithAttributes = Variant & {
   attributeValues: (VariantAttributeValue & {
     attributeValue: AttributeValue & {
@@ -59,7 +59,7 @@ function toDefaultVariantDTO(
     price: variant.price.toNumber(),
 
     compareAtPrice: variant.compareAtPrice
-      ? variant.compareAtPrice.toNumber()
+      ? variant.compareAtPrice?.toNumber()
       : null,
 
     sku: variant.sku,
@@ -98,7 +98,6 @@ export function toVariantResponseDTO(
     })),
   };
 }
-
 // Product List DTO
 export function toProductListItemDTO(
   product: ProductWithVariants,
@@ -145,6 +144,7 @@ export function toProductListItemDTO(
 }
 
 // Product Detail DTO
+
 export function toProductDetailDTO(
   product: ProductWithVariants,
 ): ProductDetailDTO {
@@ -152,13 +152,10 @@ export function toProductDetailDTO(
 
   return {
     id: product.id,
-
     name: product.name,
-
     slug: product.slug,
 
     categoryId: product.categoryId,
-
     brandId: product.brandId,
 
     description: product.description,
@@ -197,5 +194,78 @@ export function toProductTableRow(
     createdAt: product.createdAt,
 
     categoryName: product.categoryName,
+  };
+}
+
+import type { ProductEditDTO } from "../types/product-edit.dto";
+import { ProductFindByIdPayload } from "../prisma/product.payload";
+import { BusinessError } from "@/server/errors/business-error";
+import { ErrorCodes } from "@/server/errors/error-codes";
+
+type ProductEditMapperInput = {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  categoryId: string;
+  brandId: string | null;
+  isPublished: boolean;
+  isActive: boolean;
+
+  variants: Array<{
+    id: string;
+    sku: string;
+    price: {
+      toNumber(): number;
+    };
+    compareAtPrice: {
+      toNumber(): number;
+    } | null;
+    stock: number;
+    isDefault: boolean;
+  }>;
+
+  images: Array<{
+    id: string;
+    url: string;
+    altText: string | null;
+    sortOrder: number;
+  }>;
+};
+
+export function toProductEditDTO(
+  product: ProductFindByIdPayload,
+): ProductEditDTO {
+  const defaultVariant =
+    product.variants.find((variant) => variant.isDefault) ??
+    product.variants[0];
+  if (!defaultVariant) {
+    throw new BusinessError(
+      "محصول باید حداقل یک Variant داشته باشد",
+      ErrorCodes.PRODUCT_VARIANT_NOT_FOUND,
+    );
+  }
+  return {
+    id: product.id,
+    name: product.name,
+    slug: product.slug,
+    description: product.description,
+    categoryId: product.categoryId,
+    brandId: product.brandId,
+    isPublished: product.isPublished,
+    isActive: product.isActive,
+    defaultVariant: {
+      id: defaultVariant.id,
+      sku: defaultVariant.sku,
+      price: defaultVariant.price.toNumber(),
+      compareAtPrice: defaultVariant.compareAtPrice?.toNumber() ?? null,
+      stock: defaultVariant.stock,
+    },
+    images: product.images.map((image) => ({
+      id: image.id,
+      url: image.url,
+      altText: image.altText,
+      sortOrder: image.sortOrder,
+    })),
   };
 }

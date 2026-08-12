@@ -18,4 +18,4 @@ export async function updateProductImageService(input: UpdateProductImageInput) 
   });
 
   return toProductImageDTO(updated);
-}
+} 

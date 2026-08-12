@@ -1,4 +1,6 @@
+
 import { redirect } from "next/navigation";
+
 import { auth } from "@/server/auth";
 import { AdminSidebar } from "@/features/admin/components/admin-sidebar";
 
@@ -8,7 +10,7 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  console.log("SESSION:",session);
+
   if (!session?.user) {
     redirect("/admin/login");
   }
@@ -18,10 +20,13 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="min-h-screen bg-[var(--color-background)] ">
       <AdminSidebar />
 
-      <main className="flex-1">{children}</main>
+      <main className="min-h-screen lg:mr-64">
+        {children}
+      </main>
     </div>
   );
 }
+

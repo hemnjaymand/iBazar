@@ -9,12 +9,18 @@ export async function publishProductService(productId: string) {
     where: { id: productId },
     include: { variants: true },
   });
-  if (!product)
-    throw new BusinessError("محصول یافت نشد", ErrorCodes.PRODUCT_NOT_FOUND);
+
+  if (!product) {
+    throw new BusinessError(
+      "محصول یافت نشد",
+      ErrorCodes.PRODUCT_NOT_FOUND,
+    );
+  }
 
   const hasSellableVariant = product.variants.some(
     (v) => v.isActive && v.price.toNumber() > 0,
   );
+
   if (!hasSellableVariant) {
     throw new BusinessError(
       "محصول باید حداقل یک Variant قابل‌فروش داشته باشد",
@@ -24,6 +30,8 @@ export async function publishProductService(productId: string) {
 
   return prisma.product.update({
     where: { id: productId },
-    data: { isPublished: true },
+    data: {
+      isPublished: true,
+    },
   });
 }

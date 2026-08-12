@@ -5,4 +5,4 @@ import { toProductListItemDTO } from "../mappers/product.mapper";
 export async function getDiscountedProductsService(limit = 10) {
   const products = await productRepository.findDiscounted(limit);
   return products.map(toProductListItemDTO);
-}
+} 

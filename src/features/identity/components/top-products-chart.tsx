@@ -1,28 +1,63 @@
+
 "use client";
 
 import dynamic from "next/dynamic";
 
 export const TopProductsChart = dynamic(
   () =>
-    import("./top-products-chart-inner").then((m) => m.TopProductsChartInner),
+    import("./top-products-chart-inner").then(
+      (module) => module.TopProductsChartInner
+    ),
   {
+    // نمودار فقط در Client رندر شود.
+    // این کار از مشکلات SSR/Hydration در Recharts جلوگیری می‌کند.
     ssr: false,
+
+    // Skeleton هنگام بارگذاری نمودار
     loading: () => (
-      <div 
-        className="h-[300px] w-full flex flex-col justify-center gap-5 py-4 px-2 animate-pulse bg-[var(--color-card)] rounded-xl"
+      <div
+        className="
+          flex
+          h-[300px]
+          w-full
+          flex-col
+          justify-center
+          gap-5
+          rounded-xl
+          bg-[var(--color-card)]
+          px-2
+          py-4
+          animate-pulse
+        "
         aria-busy="true"
         aria-label="در حال بارگذاری نمودار پرفروش‌ترین محصولات"
       >
-        {/* تولید ۵ ردیف افقی تزئینی برای شبیه‌سازی لودینگ محصولات */}
         {[85, 45, 95, 60, 35].map((width, index) => (
-          <div key={index} className="flex items-center gap-4 w-full">
-            {/* شبیه‌ساز لیبل محور Y (نام محصول) */}
-            <div className="h-4 w-24 bg-[var(--color-border)]/60 rounded-md shrink-0" />
-            
-            {/* شبیه‌ساز نوار افقی (میزان فروش) */}
-            <div 
-              className="h-6 bg-[var(--color-border)]/40 rounded-md" 
-              style={{ width: `${width}%` }} 
+          <div
+            key={index}
+            className="flex w-full items-center gap-4"
+          >
+            {/* شبیه‌ساز نام محصول */}
+            <div
+              className="
+                h-4
+                w-24
+                shrink-0
+                rounded-md
+                bg-[var(--color-border)]/60
+              "
+            />
+
+            {/* شبیه‌ساز نوار فروش */}
+            <div
+              className="
+                h-6
+                rounded-md
+                bg-[var(--color-border)]/40
+              "
+              style={{
+                width: `${width}%`,
+              }}
             />
           </div>
         ))}

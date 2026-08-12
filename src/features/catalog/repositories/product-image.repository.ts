@@ -12,7 +12,7 @@ export const productImageRepository = {
   }) {
     return prisma.productImage.create({ data });
   },
-
+ 
   // متد موجود برای دریافت تصاویر یک محصول
   findByProduct(productId: string) {
     return prisma.productImage.findMany({

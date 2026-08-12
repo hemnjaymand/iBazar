@@ -102,7 +102,7 @@ export function IncredibleOffersSlider({
                   )}
                   {variant.compareAtPrice && (
                     <span className="num text-[11px] text-gray-400 line-through mr-auto">
-                      {variant.compareAtPrice.toLocaleString("fa-IR")}
+                      {variant.compareAtPrice?.toLocaleString("fa-IR")}
                     </span>
                   )}
                 </div>

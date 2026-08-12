@@ -18,3 +18,4 @@ export async function deleteProductImageService(
   const deleted = await productImageRepository.delete(input.id);
   return toProductImageDTO(deleted);
 }
+ 

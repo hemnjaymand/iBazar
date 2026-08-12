@@ -110,7 +110,7 @@ function PriceDisplay({ price, compareAtPrice }: { price: number; compareAtPrice
     <div className="flex items-baseline gap-2">
       {compareAtPrice && (
         <span className="num text-sm text-[var(--color-muted-foreground)] line-through">
-          {compareAtPrice.toLocaleString("fa-IR")}
+          {compareAtPrice?.toLocaleString("fa-IR")}
         </span>
       )}
       <span className="num text-2xl font-bold">

@@ -1,3 +1,4 @@
+
 import type { VariantResponseDTO } from "./variant.dto";
 
 export interface ProductDefaultVariantDTO {
@@ -6,34 +7,46 @@ export interface ProductDefaultVariantDTO {
   compareAtPrice: number | null;
   sku: string;
   inventory: number;
-   imageUrl: string | null; 
+  imageUrl: string | null;
 }
- 
+
 export interface ProductListItemDTO {
   id: string;
-  slug: string;
   name: string;
+  slug: string;
   description: string | null;
+
   categoryId: string;
   brandId: string | null;
+
   isActive: boolean;
   isPublished: boolean;
+
   createdAt: Date;
   updatedAt: Date;
+
+  imageUrl: string | null;
+
   defaultVariant: ProductDefaultVariantDTO | null;
-  items: ProductListItemDTO[]
-  imageUrl: string | null; 
+
+  items: unknown[];
 }
 
 export interface ProductDetailDTO {
   id: string;
   name: string;
   slug: string;
-  description: string | null;
+
   categoryId: string;
   brandId: string | null;
+
+  description: string | null;
+
   isPublished: boolean;
+
+  imageUrl: string | null;
+
   variants: VariantResponseDTO[];
+
   defaultVariant: VariantResponseDTO | null;
-   imageUrl: string | null; 
 }

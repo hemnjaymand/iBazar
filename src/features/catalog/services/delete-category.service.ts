@@ -17,7 +17,7 @@ export async function deleteCategoryService(id: string) {
       ErrorCodes.CATEGORY_HAS_CHILDREN
     );
   }
-
+ 
   const productCount = await prisma.product.count({ where: { categoryId: id } });
   if (productCount > 0) {
     throw new BusinessError(

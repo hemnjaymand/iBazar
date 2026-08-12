@@ -11,13 +11,13 @@ import {
 } from "@tanstack/react-table";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
-import {
-  deleteProductAction,
-  toggleProductPublishAction,
-} from "../actions/product-mutation.actions";
+
 import type { ProductListItemDTO } from "../types/product.dto";
 import type { ProductTableRow } from "../types/product-table-row.dto";
 import { toast } from "@/shared/lib/toast";
+import { publishProductAction } from "../actions";
+import { unpublishProductService } from "../services/unpublish-product.service";
+import { toggleProductPublishAction } from "../actions/product-mutation.actions";
 
 /**
  * این تبدیل قبلاً در product.mapper.ts بود — از اونجا حذفش کردیم چون
@@ -34,7 +34,7 @@ function toProductTableRow(p: ProductListItemDTO): ProductTableRow {
     isPublished: p.isPublished,
     isActive: p.isActive,
     createdAt: p.createdAt,
-    categoryName: p.categoryId,
+   categoryName: p.categoryId ?? "بدون دسته",
   };
 }
 
@@ -82,35 +82,28 @@ export function ProductsTable({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const handleTogglePublish = useCallback(
-    async (id: string, current: boolean) => {
-      const result = await toggleProductPublishAction({
-        id,
-        isPublished: !current,
-      });
-      if (!result.success) {
-        toast.error(result.error.message);
-        return;
-      }
-      toast.success(current ? "محصول به پیش‌نویس برگشت" : "محصول منتشر شد");
-      router.refresh();
-    },
-    [router],
-  );
+const handleTogglePublish = useCallback(
+  async (id: string, current: boolean) => {
+    const result = await toggleProductPublishAction({
+      id,
+      isPublished: !current,
+    });
 
-  const handleDelete = useCallback(
-    async (id: string) => {
-      if (!confirm("این محصول حذف شود؟")) return;
-      const result = await deleteProductAction(id);
-      if (!result.success) {
-        toast.error(result.error.message);
-        return;
-      }
-      toast.success("محصول غیرفعال شد");
-      router.refresh();
-    },
-    [router],
-  );
+    if (!result.success) {
+      toast.error(result.error.message);
+      return;
+    }
+
+    toast.success(
+      current
+        ? "محصول به پیش‌نویس برگشت"
+        : "محصول منتشر شد",
+    );
+
+    router.refresh();
+  },
+  [router],
+);
 
   return (
     <div className="overflow-x-auto rounded-[var(--radius)] border border-[var(--color-border)]">
@@ -142,7 +135,13 @@ export function ProductsTable({
                 </td>
               ))}
               <td className="px-4 py-2.5">
-                <div className="flex gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Link href={`/admin/products/${row.original.id}/edit`}>
+                    <Button size="sm" variant="outline">
+                      ویرایش
+                    </Button>
+                  </Link>
+
                   <Button
                     size="sm"
                     variant="outline"
@@ -154,18 +153,6 @@ export function ProductsTable({
                     }
                   >
                     {row.original.isPublished ? "عدم انتشار" : "انتشار"}
-                  </Button>
-                  <Link href={`/admin/products/${row.original.id}`}>
-                    <Button size="sm" variant="outline">
-                      ویرایش
-                    </Button>
-                  </Link>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => handleDelete(row.original.id)}
-                  >
-                    حذف
                   </Button>
                 </div>
               </td>
