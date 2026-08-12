@@ -2,6 +2,6 @@ export interface CategoryTreeItem {
   id: string;
   name: string;
   slug: string;
-  imageUrl:string;
+  imageUrl: string | null;
   children: CategoryTreeItem[];
 }

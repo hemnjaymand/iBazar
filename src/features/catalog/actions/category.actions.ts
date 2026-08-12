@@ -13,14 +13,17 @@ export async function createCategoryAction(formData: FormData) {
   // ۱. بررسی دسترسی ادمین
   await requireAdmin();
 
-  // ۲. اعتبارسنجی ورودی‌های فرم
+  // ۲. اعتبارسنجی ورودی‌های فرم (اضافه شدن imageUrl)
   const parsed = createCategorySchema.safeParse({
     name: formData.get("name"),
     slug: formData.get("slug"),
     parentId: formData.get("parentId") || null,
+    imageUrl: formData.get("imageUrl") || null, 
   });
 
   if (!parsed.success) {
+    // ثبت خطای دقیق برای دیباگ سریع‌تر در ترمینال
+    console.error("Category Validation Errors:", parsed.error.flatten().fieldErrors);
     return fail("VALIDATION_ERROR", "اطلاعات نامعتبر است");
   }
 
@@ -28,8 +31,8 @@ export async function createCategoryAction(formData: FormData) {
     // ۳. اجرای سرویس ساخت دسته‌بندی
     const category = await createCategoryService(parsed.data);
 
-    // ۴. اینولید کردن کش دسته‌بندی‌ها (اصلاح شد: حذف آرگومان دوم)
-    revalidateTag(CacheTags.CATEGORIES,"");
+    // ۴. اینولید کردن کش دسته‌بندی‌ها با استراتژی max
+    revalidateTag(CacheTags.CATEGORIES, "max");
 
     return ok(category);
   } catch (error) {

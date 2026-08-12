@@ -4,7 +4,6 @@ import { Prisma } from "../../../../prisma/generated/client";
 import { ProductWithVariants } from "../mappers";
 import { variantInclude } from "../prisma/product.include";
 
-
 export interface CreateProductWithVariantInput {
   name: string;
   slug: string;
@@ -224,7 +223,7 @@ export const productRepository = {
       where: {
         id,
       },
- 
+
       data: {
         isActive: false,
         isPublished: false,

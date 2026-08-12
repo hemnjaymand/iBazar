@@ -57,3 +57,16 @@
     unicode-bidi: isolate;
   }
 }
+
+@layer utilities {
+  /* مخفی کردن اسکرول‌بار برای کروم، سافاری و اپرا */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* مخفی کردن اسکرول‌بار برای اینترنت اکسپلورر، اج و فایرفاکس */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}

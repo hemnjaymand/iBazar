@@ -33,10 +33,17 @@ export async function HeroSlider() {
 
   return (
     <div
-      className="relative overflow-hidden "
+     className="
+    relative
+    left-1/2
+    right-1/2
+    -mx-[50vw]
+    w-screen
+    overflow-hidden
+  "
     >
       <SliderClients slides={slides} />
     </div>
   );
 }
-// left-1/2 right-1/2 -mx-[50vw] w-screen 
+// left-1/2 right-1/2 -mx-[50vw] w-screen

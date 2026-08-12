@@ -1,7 +1,8 @@
-import Link from "next/link";
-import Image from "next/image";
-import { getCategoryUrl } from "@/shared/utils/category-url";
-import { Category } from "@prisma/client/client";
+import Link from 'next/link';
+import Image from 'next/image';
+
+import { getCategoryUrl } from '@/shared/utils/category-url';
+import { Category } from '@prisma/client/client';
 
 type CategoryWithOptionalImage = Category & {
   imageUrl?: string | null;
@@ -11,62 +12,196 @@ type CategoryWithOptionalImage = Category & {
 interface CategoryShowcaseProps {
   categories: CategoryWithOptionalImage[];
 }
-
+// console.log(Cate);
 export function CategoryShowcase({ categories }: CategoryShowcaseProps) {
+  // console.log('Categories Data in UI:', JSON.stringify(categories, null, 2));
   if (!categories || categories.length === 0) {
     return null;
   }
 
   return (
     <section className="w-full py-4">
-      {/* در موبایل: اسکرول افقی / در دسکتاپ: گرید انعطاف‌پذیر و مرتب */}
-      <div className="flex items-start gap-4 md:gap-6 overflow-x-auto pb-3 pt-1 no-scrollbar scroll-smooth snap-x md:grid md:grid-cols-6 lg:grid-cols-8 md:overflow-visible md:justify-items-center">
+      <div
+        className="
+          flex
+          flex-nowrap
+          items-start
+          gap-4
+          overflow-x-auto
+          pb-3
+          pt-1
+          no-scrollbar
+          scroll-smooth
+          snap-x
+    
+        "
+      >
         {categories.map((category) => {
-          const hasImage = category.imageUrl && category.imageUrl.trim() !== "";
+          const hasImage = category.imageUrl && category.imageUrl.trim() !== '';
 
           return (
             <Link
               key={category.id}
               href={getCategoryUrl(category)}
-              className="group flex flex-col items-center shrink-0 w-20 sm:w-24 md:w-full snap-start transition-transform active:scale-95"
+              className="
+                group
+                flex
+                w-20
+                shrink-0
+                flex-col
+                items-center
+                snap-start
+                transition-transform
+                active:scale-95
+
+                sm:w-24
+              "
             >
-              {/* دایره تصویر/آیکون دسته‌بندی با افکت Hover دیجی‌کالایی */}
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-gray-50 flex items-center justify-center mb-2 shadow-xs group-hover:shadow-md group-hover:ring-2 group-hover:ring-red-500/20 transition-all duration-300 border border-gray-100">
+              <div
+                className="
+                  relative
+                  mb-2
+                  flex
+                  h-16
+                  w-16
+                  items-center
+                  justify-center
+                  overflow-hidden
+                  rounded-full
+                  border
+                  border-gray-100
+                  bg-gray-50
+                  shadow-xs
+                  transition-all
+                  duration-300
+                  group-hover:shadow-md
+                  group-hover:ring-2
+                  group-hover:ring-red-500/20
+
+                  sm:h-20
+                  sm:w-20
+                "
+              >
                 {hasImage ? (
                   <Image
                     src={category.imageUrl!}
                     alt={category.name}
                     fill
+                    unoptimized
                     sizes="(max-width: 768px) 80px, 96px"
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="
+                      object-cover
+                      transition-transform
+                      duration-300
+                      group-hover:scale-110
+                    "
                   />
                 ) : (
-                  /* Fallback گرافیکی در صورت عدم وجود تصویر */
-                  <div className="w-full h-full bg-gradient-to-br from-red-50 via-rose-50 to-red-100 flex items-center justify-center text-red-600 font-black text-xl sm:text-2xl group-hover:scale-110 transition-transform duration-300 select-none">
-                    {category.name.charAt(0)}
+                  <div
+                    className="
+                      flex
+                      h-full
+                      w-full
+                      flex-col
+                      items-center
+                      justify-center
+                      bg-gradient-to-br
+                      from-red-50
+                      via-rose-50
+                      to-red-100
+                      text-center
+                      text-[10px]
+                      font-bold
+                      text-red-600
+                      transition-transform
+                      duration-300
+                      group-hover:scale-110
+                      px-1
+                      leading-tight
+                      sm:text-xs
+                    "
+                  >
+                    {category.name}
                   </div>
                 )}
               </div>
 
-              {/* عنوان دسته‌بندی */}
-              <span className="text-[11px] sm:text-xs font-semibold text-gray-700 text-center line-clamp-2 leading-tight group-hover:text-red-600 transition-colors max-w-[85px] sm:max-w-[100px]">
+              <span
+                className="
+                  max-w-[85px]
+                  text-center
+                  text-[11px]
+                  font-semibold
+                  leading-tight
+                  text-gray-700
+                  transition-colors
+                  line-clamp-2
+                  group-hover:text-red-600
+
+                  sm:max-w-[100px]
+                  sm:text-xs
+                "
+              >
                 {category.name}
               </span>
             </Link>
           );
         })}
-        <div>
+
+        {/* دکمه بیشتر */}
+        <div className="shrink-0">
           <Link
             href="/search"
-            className="group flex flex-col items-center justify-center text-center cursor-pointer select-none"
+            className="
+              group
+              flex
+              w-20
+              cursor-pointer
+              select-none
+              flex-col
+              items-center
+              justify-center
+              text-center
+              sm:w-24
+            "
           >
-            {/* دایره آیکون */}
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gray-200 flex items-center justify-center mb-2 shadow-xs group-hover:shadow-md group-hover:ring-2 group-hover:ring-red-500/20 transition-all duration-300 border border-gray-100">
-              {/* <ArrowLeft className="w-5 h-5 text-red-600 transition-transform duration-300 group-hover:-translate-x-1" /> */}
-                  <span className="font-extrabold text-gray-600">...</span>
+            <div
+              className="
+                mb-2
+                flex
+                h-16
+                w-16
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-gray-100
+                bg-gray-200
+                shadow-xs
+                transition-all
+                duration-300
+                group-hover:shadow-md
+                group-hover:ring-2
+                group-hover:ring-red-500/20
+
+                sm:h-20
+                sm:w-20
+              "
+            >
+              <span className="font-extrabold text-gray-600">...</span>
             </div>
-            {/* متن بیشتر */}
-            <span className="text-xs sm:text-sm font-bold text-gray-700 group-hover:text-red-600 transition-colors">
+
+            <span
+              className="
+                text-xs
+                font-bold
+                text-gray-700
+                transition-colors
+                group-hover:text-red-600
+
+                sm:text-sm
+              "
+            >
               بیشتر
             </span>
           </Link>

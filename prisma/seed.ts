@@ -481,7 +481,7 @@ async function main() {
   await seedContent();
   await seedAppSettings();
 
-  console.log("\n✅ Seed با موفقیت تمام شد.");
+  console.log(" Seed با موفقیت تمام شد.");
 }
 
 main()

@@ -8,7 +8,7 @@ export function toCategoryResponseDTO(c: Category): CategoryResponseDTO {
     name: c.name,
     slug: c.slug,
     parentId: c.parentId,
-    imageUrl: null,
+    imageUrl: c.imageUrl,
     isActive: c.isActive,
   };
 }

@@ -50,7 +50,6 @@ export async function updateCategoryService(
 
   const updated = await categoryRepository.update(id, input);
 
-  // ✅ اضافه کردن imageUrl به شیء (بدون as any)
   return toCategoryResponseDTO({
     ...updated,
     imageUrl: input.imageUrl ?? null,

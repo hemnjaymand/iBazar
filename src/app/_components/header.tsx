@@ -1,18 +1,18 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Bell, LogIn, MapPin } from "lucide-react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Bell, LogIn, MapPin } from 'lucide-react';
 
-import { AppConfig } from "@/config/app";
-import { auth } from "@/server/auth";
+import { AppConfig } from '@/config/app';
+import { auth } from '@/server/auth';
 
-import { buildCategoryTreeService } from "@/features/catalog/services/build-category-tree.service";
-import { getLogoUrl } from "@/features/settings/services/get-store-settings.service";
+import { buildCategoryTreeService } from '@/features/catalog/services/build-category-tree.service';
+import { getLogoUrl } from '@/features/settings/services/get-store-settings.service';
 
-import { CartBadgeLink } from "./cart-badge-link";
-import { MainMenu } from "./main-menu";
-import { MobileNav } from "./mobile-nav";
-import { SearchBar } from "./search-bar";
-import { UserMenu } from "./user-menu";
+import { CartBadgeLink } from './cart-badge-link';
+import { MainMenu } from './main-menu';
+import { MobileNav } from './mobile-nav';
+import { SearchBar } from './search-bar';
+import { UserMenu } from './user-menu';
 
 export async function Header() {
   const [categories, logoUrl, session] = await Promise.all([
@@ -34,12 +34,11 @@ export async function Header() {
               <div className="relative h-8 w-28 md:h-10 md:w-32 lg:w-40">
                 <Image
                   src={logoUrl}
-                  alt={AppConfig.name}
-                  fill
-                  sizes="160px"
+                  alt="لوگوی فروشگاه"
+                  width={120}
+                  height={40}
+                  style={{ height: 'auto' }} 
                   className="object-contain"
-                  priority
-                  unoptimized
                 />
               </div>
             </Link>

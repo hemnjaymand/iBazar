@@ -4,15 +4,15 @@ import { PackageX } from "lucide-react"; // فرض بر استفاده از luci
 
 export function ProductGrid({ products }: { products: { items: ProductListItemDTO[] } }) {
   const items = products?.items || [];
-console.log("PAGE PRODUCTS", products);
-console.log(
- "GRID PRODUCTS:",
- products.items.map(p=>({
-   name:p.name,
-   image:p.imageUrl,
-   variant:p.defaultVariant?.imageUrl
- }))
-);
+// console.log("PAGE PRODUCTS", products);
+// console.log(
+//  "GRID PRODUCTS:",
+//  products.items.map(p=>({
+//    name:p.name,
+//    image:p.imageUrl,
+//    variant:p.defaultVariant?.imageUrl
+//  }))
+// );
   if (items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 px-4 border border-dashed border-[var(--color-border)] rounded-2xl bg-[var(--color-card)]/50">

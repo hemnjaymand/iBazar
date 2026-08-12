@@ -35,11 +35,11 @@ const items = products.map((p) => ({
   categoryName: p.category?.name ?? "—",
 }));
 
-console.log("SERVICE ITEMS IMAGE:", items.map(item => ({
-  name:item.name,
-  imageUrl:item.imageUrl,
-  variantImage:item.defaultVariant?.imageUrl
-})));
+// console.log("SERVICE ITEMS IMAGE:", items.map(item => ({
+//   name:item.name,
+//   imageUrl:item.imageUrl,
+//   variantImage:item.defaultVariant?.imageUrl
+// })));
 
 return {
  items,

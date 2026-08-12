@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const [productsResult, categories, discountedProducts] = await Promise.all([
     searchProductsService({ page: 1 }),
-    getCategoriesForHomeService(6),
+    getCategoriesForHomeService(),
     getDiscountedProductsService(10),
   ]);
 

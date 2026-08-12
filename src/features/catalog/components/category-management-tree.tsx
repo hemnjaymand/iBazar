@@ -2,21 +2,30 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import { CategoryFormDialog } from "./category-form-dialog";
+
 import { Button } from "@/shared/ui/button";
+
 import type {
   CategoryTreeNodeDTO,
   CategoryResponseDTO,
 } from "../types/category.dto";
+
 import { deleteCategoryAction } from "../actions/category-mutation.actions";
 
-function flatten(tree: CategoryTreeNodeDTO[]): CategoryResponseDTO[] {
+function flatten(
+  tree: CategoryTreeNodeDTO[],
+): CategoryResponseDTO[] {
   const result: CategoryResponseDTO[] = [];
+
   for (const node of tree) {
     const { children, ...rest } = node;
+
     result.push(rest as CategoryResponseDTO);
     result.push(...flatten(children));
   }
+
   return result;
 }
 
@@ -26,28 +35,47 @@ export function CategoryManagementTree({
   tree: CategoryTreeNodeDTO[];
 }) {
   const router = useRouter();
+
   const [dialogState, setDialogState] = useState<
-    | { mode: "create"; parentId?: string }
-    | { mode: "edit"; category: CategoryResponseDTO }
+    | {
+        mode: "create";
+        parentId?: string;
+      }
+    | {
+        mode: "edit";
+        category: CategoryResponseDTO;
+      }
     | null
   >(null);
 
   const allCategories = flatten(tree);
 
   async function handleDelete(id: string) {
-    if (!confirm("این دسته‌بندی حذف شود؟")) return;
+    if (!confirm("این دسته‌بندی حذف شود؟")) {
+      return;
+    }
+
     const result = await deleteCategoryAction(id);
+
     if (!result.success) {
       alert(result.error.message);
       return;
     }
+
     router.refresh();
   }
 
   return (
     <div>
-      <div className="flex justify-end mb-4">
-        <Button size="sm" onClick={() => setDialogState({ mode: "create" })}>
+      <div className="mb-4 flex justify-end">
+        <Button
+          size="sm"
+          onClick={() =>
+            setDialogState({
+              mode: "create",
+            })
+          }
+        >
           + دسته‌بندی جدید
         </Button>
       </div>
@@ -58,7 +86,12 @@ export function CategoryManagementTree({
             key={node.id}
             node={node}
             depth={0}
-            onEdit={(c) => setDialogState({ mode: "edit", category: c })}
+            onEdit={(category) =>
+              setDialogState({
+                mode: "edit",
+                category,
+              })
+            }
             onDelete={handleDelete}
           />
         ))}
@@ -68,9 +101,13 @@ export function CategoryManagementTree({
         <CategoryFormDialog
           allCategories={allCategories}
           editing={
-            dialogState.mode === "edit" ? dialogState.category : undefined
+            dialogState.mode === "edit"
+              ? dialogState.category
+              : undefined
           }
-          onClose={() => setDialogState(null)}
+          onClose={() =>
+            setDialogState(null)
+          }
           onSuccess={() => {
             setDialogState(null);
             router.refresh();
@@ -89,24 +126,40 @@ function CategoryNode({
 }: {
   node: CategoryTreeNodeDTO;
   depth: number;
-  onEdit: (c: CategoryResponseDTO) => void;
+  onEdit: (category: CategoryResponseDTO) => void;
   onDelete: (id: string) => void;
 }) {
   return (
     <div>
       <div
-        style={{ paddingRight: `${depth * 1.25}rem` }}
-        className="flex items-center justify-between py-2 px-3 rounded-[var(--radius)] hover:bg-[var(--color-muted)]"
+        style={{
+          paddingRight: `${depth * 1.25}rem`,
+        }}
+        className="
+          flex
+          items-center
+          justify-between
+          rounded-[var(--radius)]
+          px-3
+          py-2
+          hover:bg-[var(--color-muted)]
+        "
       >
-        <span className="text-sm">{node.name}</span>
+        <span className="text-sm">
+          {node.name}
+        </span>
+
         <div className="flex gap-1.5">
           <button
+            type="button"
             onClick={() => onEdit(node)}
             className="text-xs text-[var(--color-primary)]"
           >
             ویرایش
           </button>
+
           <button
+            type="button"
             onClick={() => onDelete(node.id)}
             className="text-xs text-[var(--color-destructive)]"
           >
@@ -114,6 +167,7 @@ function CategoryNode({
           </button>
         </div>
       </div>
+
       {node.children.map((child) => (
         <CategoryNode
           key={child.id}
