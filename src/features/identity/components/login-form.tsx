@@ -38,7 +38,12 @@ export function LoginForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
+  } = useForm<LoginInput>({ resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "admin@example.com", 
+      password: "Admin@12345",
+    },
+   });
 
   async function onSubmit(data: LoginInput) {
     setServerError(null);

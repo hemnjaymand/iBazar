@@ -18,7 +18,7 @@ async function seedUsers() {
   const admin = await prisma.user.upsert({
     where: { email: "admin@example.com" },
     update: {},
-    create: {
+    create: { 
       name: "مدیر فروشگاه",
       email: "admin@example.com",
       passwordHash: adminPasswordHash,

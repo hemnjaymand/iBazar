@@ -1,22 +1,22 @@
-﻿import type { Metadata } from "next";
-import { Suspense } from "react";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
-import { Header } from "@/app/_components/header";
-import { HeroSlider } from "@/features/content/components/hero-slider";
-import { CategoryShowcase } from "@/features/catalog/components/category-showcase";
-import { searchProductsService } from "@/features/catalog/services/search-products.service";
-import { getCategoriesForHomeService } from "@/features/catalog/services/get-categories-for-home.service";
-import { getDiscountedProductsService } from "@/features/catalog/services/get-discounted-products.service";
-import { IncredibleOffersSlider } from "./_components/incredible-offers-slider";
-import { ProductGrid } from "@/features/shopping/components/product-grid";
-import { BestSellersGrid } from "./_components/best-sellers-grid";
-import { Footer } from "./_components/footer";
+﻿import type { Metadata } from 'next';
+import { Suspense } from 'react';
+import Link from 'next/link';
+import { ChevronLeft } from 'lucide-react';
+import { Header } from '@/app/_components/header';
+import { HeroSlider } from '@/features/content/components/hero-slider';
+import { CategoryShowcase } from '@/features/catalog/components/category-showcase';
+import { searchProductsService } from '@/features/catalog/services/search-products.service';
+import { getCategoriesForHomeService } from '@/features/catalog/services/get-categories-for-home.service';
+import { getDiscountedProductsService } from '@/features/catalog/services/get-discounted-products.service';
+import { IncredibleOffersSlider } from './_components/incredible-offers-slider';
+import { ProductGrid } from '@/features/shopping/components/product-grid';
+import { BestSellersGrid } from './_components/best-sellers-grid';
+import { Footer } from './_components/footer';
 
 export const metadata: Metadata = {
-  title: "فروشگاه اینترنتی | خرید آنلاین",
+  title: 'فروشگاه اینترنتی | خرید آنلاین',
   description:
-    "خرید آنلاین از بهترین برندهای روز ایران و جهان با ضمانت اصالت کالا و بهترین قیمت",
+    'خرید آنلاین از بهترین برندهای روز ایران و جهان با ضمانت اصالت کالا و بهترین قیمت',
 };
 
 export default async function HomePage() {
@@ -84,7 +84,7 @@ export default async function HomePage() {
           <BestSellersGrid products={productsResult.items.slice(0, 9)} />
         </section>
         <section>
-          <Footer  />
+          <Footer />
         </section>
       </main>
     </div>
